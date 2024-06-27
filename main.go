@@ -110,6 +110,12 @@ func getGroups() {
 	}
 }
 
+func printUsage() {
+	fmt.Println("Uso:")
+	fmt.Println("  ./sendwhats -groups                     Lista os grupos e contatos")
+	fmt.Println("  ./sendwhats <phone/id> <title> <message>   Envia uma mensagem")
+}
+
 func main() {
 	// Carrega a configuração
 	loadConfig()
@@ -124,14 +130,14 @@ func main() {
 	}
 
 	// Parâmetros para enviar mensagem
-	if len(os.Args) < 4 {
-		fmt.Println("Uso: ./meuapp <phone> <title> <message>")
+	if len(flag.Args()) < 3 {
+		printUsage()
 		return
 	}
 
-	phone := os.Args[1]
-	title := os.Args[2]
-	message := strings.Join(os.Args[3:], " ")
+	phone := flag.Arg(0)
+	title := flag.Arg(1)
+	message := strings.Join(flag.Args()[2:], " ")
 
 	sendMessage(phone, title, message)
 }
