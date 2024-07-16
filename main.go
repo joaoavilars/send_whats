@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"gopkg.in/ini.v1"
@@ -26,7 +27,15 @@ type Group struct {
 var serverURL string
 
 func loadConfig() {
-	cfg, err := ini.Load("sendwhats.conf")
+	executable, err := os.Executable()
+	if err != nil {
+		fmt.Println("Erro ao obter o caminho do executável:", err)
+		os.Exit(1)
+	}
+	executablePath := filepath.Dir(executable)
+	configPath := filepath.Join(executablePath, "sendwhats.conf")
+
+	cfg, err := ini.Load(configPath)
 	if err != nil {
 		fmt.Println("Erro ao carregar arquivo de configuração:", err)
 		os.Exit(1)
