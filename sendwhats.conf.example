@@ -1,0 +1,15 @@
+# Exemplo de configuração para WhatsApp-Web.js
+# Descomente e ajuste os valores abaixo:
+
+# api_type=whatsapp-web
+# site=http://192.168.10.32:4000
+
+# ============================================
+
+# Exemplo de configuração para EvolutionAPI
+# Descomente e ajuste os valores abaixo:
+
+# api_type=evolutionapi
+# evolution_url=http://localhost:8080
+# evolution_apikey=sua_chave_api_aqui
+# evolution_instance=nome_da_instancia
