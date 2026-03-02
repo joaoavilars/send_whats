@@ -33,8 +33,9 @@ type EvolutionMessage struct {
 
 // Estrutura de resposta EvolutionAPI para grupos
 type EvolutionGroup struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID      string `json:"id"`
+	Name    string `json:"name"`
+	Subject string `json:"subject"`
 }
 
 type EvolutionGroupsResponse struct {
@@ -254,7 +255,7 @@ func getGroupsWhatsAppWeb() {
 func getGroupsEvolutionAPI() {
 	// Remove barra final da URL se existir
 	baseURL := strings.TrimSuffix(config.EvolutionURL, "/")
-	url := baseURL + "/group/fetchAllGroups/" + config.EvolutionInstance
+	url := baseURL + "/group/fetchAllGroups/" + config.EvolutionInstance + "?getParticipants=false"
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -305,8 +306,13 @@ func getGroupsEvolutionAPI() {
 	}
 	
 	for _, group := range groups {
-		if group.Name != "" {
-			fmt.Printf("ID: %s - Nome: %s\n", group.ID, group.Name)
+		name := group.Name
+		if name == "" {
+			name = group.Subject
+		}
+		
+		if name != "" {
+			fmt.Printf("ID: %s - Nome: %s\n", group.ID, name)
 		} else {
 			fmt.Printf("ID: %s - Nome: (sem nome)\n", group.ID)
 		}
